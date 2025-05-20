@@ -35,6 +35,11 @@ public class RNNotification {
     protected String image;
     protected String time;
     protected String iconLarge;
+    // New fields for reply functionality
+    protected String key;
+    protected String packageName;
+    protected boolean canReply;
+    
     public RNNotification(Context context, StatusBarNotification sbn) {
         Notification notification = sbn.getNotification();
 
@@ -56,6 +61,11 @@ public class RNNotification {
             this.icon = this.getNotificationIcon(context, notification);
             this.image = this.getNotificationImage(notification);
             this.groupedMessages = this.getGroupedNotifications(notification);
+            
+            // Initialize the new fields
+            this.key = sbn.getKey();
+            this.packageName = sbn.getPackageName();
+            this.canReply = false; // This will be set by the listener service
         } else {
             Log.d(TAG, "The notification received has no data");
         }
